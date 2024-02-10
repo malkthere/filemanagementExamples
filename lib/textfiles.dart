@@ -30,10 +30,16 @@ import 'package:path_provider/path_provider.dart';
     final List<String> fileContent2 = await filepath!.readAsLines();
    //print(fileContent.toString());
     print("=====================");
+    int count=0;
+
     for (var i in fileContent2){
       //print(i);
-      List<String> s=i.split(",");
-      print(s[1]);
+      if ((count==4) || (count > 6)){
+        List<String> s=i.split(",");
+        print(s[1]);
+      }
+
+      count++;
     }
 
       //print("LINE001"+fileContent2[0].toString());
