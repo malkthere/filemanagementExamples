@@ -1,12 +1,7 @@
+import 'dart:convert';
 import 'dart:io';
-//import 'package:filemanagment/main.dart';
-
 import 'main.dart';
-import 'package:flutter/material.dart';
-import 'package:file_picker/file_picker.dart';
-import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
-
 import 'package:path_provider/path_provider.dart';
 
  class Textfiles {
@@ -32,15 +27,27 @@ import 'package:path_provider/path_provider.dart';
     //final File file = File(path);
 
     final String fileContent = await filepath!.readAsString();
+    final List<String> fileContent2 = await filepath!.readAsLines();
+   //print(fileContent.toString());
+    print("=====================");
+    for (var i in fileContent2){
+      //print(i);
+      List<String> s=i.split(",");
+      print(s[1]);
+    }
 
-    print(fileContent.toString());
-
-    x=fileContent;
-
-    return(fileContent);
+      //print("LINE001"+fileContent2[0].toString());
+      // print("LINE002"+fileContent2[1].toString());
+      // print("LINE003"+fileContent2[2].toString());
 
 
-  }
+      x=fileContent;
+
+      return(fileContent);
+    }
+
+
+
   saveTextFile(String filename, String containt) async{
     // this next 4 line to write a file in temp Directory
     final Directory tempDir = await getTemporaryDirectory();
@@ -89,11 +96,5 @@ import 'package:path_provider/path_provider.dart';
     print(appDocuments);
 
   }
-
-  void incrementCounter() async{
-
-
-  }
-
 
 }
