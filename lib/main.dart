@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:filemanagment/sqldb.dart';
 
 import 'package:path_provider/path_provider.dart';
 String x="";
@@ -42,6 +43,8 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
+  SqlDb sqlDb = SqlDb();
+
   int _counter = 0;
   Textfiles fileobj = Textfiles();
 
@@ -107,7 +110,7 @@ late String initialfilecontaint="";
             ),
             TextField(
               controller: newnote,
-              maxLines: 4,
+              maxLines: 2,
               decoration: InputDecoration(
                 border: OutlineInputBorder(),
                 labelText: 'Enter a note',
@@ -148,6 +151,21 @@ late String initialfilecontaint="";
               },
               child: const Text('get the path'),
             ),
+            ElevatedButton(
+              onPressed: () async {
+                List<Map> response= await sqlDb.readData("SELECT * FROM department");
+               print(response);
+
+              },
+              child: const Text('slect all db'),
+            ),
+            ElevatedButton(
+              onPressed: () async {
+               int response= await sqlDb.deleteData("DELETE  FROM std_info2");
+               print(response);
+              },
+              child: const Text('delete db'),
+            ),
 
 
           ]),
@@ -156,6 +174,8 @@ late String initialfilecontaint="";
           onPressed: (){
             setState(() {
               filecontaint=fileobj.readTextFile();
+              print(filecontaint);
+              //fileobj.getthepath();
             });
           },
           tooltip: 'Increment',
