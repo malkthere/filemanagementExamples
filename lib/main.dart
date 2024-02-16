@@ -80,7 +80,7 @@ late String initialfilecontaint="";
                   if (result != null) {
                   if (!kIsWeb) {
                     file = File(result!.files.single.path!);
-                    filecontaint = (await fileobj.readTextFile2(file)) as Future<String>;
+                    filecontaint = (await fileobj.readStudentslist(file)) as Future<String>;
                      //initialfilecontaint=filecontaint;
                    // x='${filecontaint}'.toString();
 
@@ -153,7 +153,7 @@ late String initialfilecontaint="";
             ),
             ElevatedButton(
               onPressed: () async {
-                List<Map> response= await sqlDb.readData("SELECT * FROM department");
+                List<Map> response= await sqlDb.readData("SELECT count(*) as 'number of students added to the db' FROM std_info2");
                print(response);
 
               },
@@ -161,7 +161,7 @@ late String initialfilecontaint="";
             ),
             ElevatedButton(
               onPressed: () async {
-               int response= await sqlDb.deleteData("DELETE  FROM std_info2");
+               int response= await sqlDb.deleteData("DELETE FROM std_info2");
                print(response);
               },
               child: const Text('delete db'),

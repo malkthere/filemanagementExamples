@@ -17,12 +17,22 @@ class SqlDb {
   initalDb() async{
     String databasepath = await getDatabasesPath();
     String path = join(databasepath, 'mazdb.db');
-    Database mydb = await openDatabase(path, onCreate: _onCreate, version:6, onUpgrade:_onUpgrade);
+    Database mydb = await openDatabase(path, onCreate: _onCreate, version:11, onUpgrade:_onUpgrade);
     return mydb;
 
   }
   _onUpgrade(Database db, int oldversion, int newversion)async{
 
+   /* await db.execute('''
+        CREATE TABLE "department" (
+	"DeptID"	INTEGER NOT NULL,
+	"DeptName"	TEXT,
+	PRIMARY KEY("DeptID" AUTOINCREMENT)
+)
+        ''');*/
+    /*await db.execute('''
+        DROP TABLE "department"
+        ''');*/
     List<Map<String, dynamic>> department2 = [
       {
         'DeptID': '1',
@@ -38,9 +48,9 @@ class SqlDb {
       },
     ];
     for (var dept in department2) {
-      await db.insert('department2', dept);
+      await db.insert('department', dept);
     }
-    await db.query('department2');
+    await db.query('department');
     print("onUpgrae =========================");
   }
   _onCreate(Database db, int version) async{
@@ -53,11 +63,14 @@ class SqlDb {
            )
         ''');
     await db.execute('''
-        CREATE TABLE "department" (
-	        "DeptID"	INTEGER,
-	        "DeptName"	TEXT
+        CREATE TABLE "std_info" (
+	        "StdID"	INTEGER,
+	        "StdName"	TEXT,
+        	"DeptID"	INTEGER,
+        	"level"	INTEGER
            )
         ''');
+
     List<Map<String, dynamic>> departments = [
       {
         'DeptID': '1',
@@ -68,7 +81,7 @@ class SqlDb {
         'DeptName': 'أمن المعلومات'
       },
       {
-        'DeptID': '1',
+        'DeptID': '3',
         'DeptName': 'علوم الحاسوب'
       },
     ];
